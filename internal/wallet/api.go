@@ -20,6 +20,7 @@ func (a *Api) AddRoutesTo(r fiber.Router) {
 	wallets.Post("/", a.CreateWallet)
 	wallets.Put("/:id/deposit", a.DepositMoney)
 	wallets.Put("/:id/withdraw", a.WithdrawMoney)
+	wallets.Get("/:id", a.GetWallet)
 }
 
 func (a *Api) CreateWallet(c *fiber.Ctx) error {
@@ -59,6 +60,16 @@ func (a *Api) WithdrawMoney(c *fiber.Ctx) error {
 	}
 
 	wallet, err := a.service.WithdrawMoney(c.UserContext(), id, transaction)
+	if err != nil {
+		return response.New(c).Error(err).JSON()
+	}
+
+	return response.New(c).Data(wallet).JSON()
+}
+
+func (a *Api) GetWallet(c *fiber.Ctx) error {
+	id := c.Params("id")
+	wallet, err := a.service.GetWallet(c.UserContext(), id)
 	if err != nil {
 		return response.New(c).Error(err).JSON()
 	}

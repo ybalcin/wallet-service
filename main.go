@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"github.com/ybalcin/wallet-service/cmd"
 	"os"
 	"os/signal"
@@ -13,7 +14,8 @@ func main() {
 	shutdown := make(chan os.Signal, 1)
 	signal.Notify(shutdown, syscall.SIGINT, syscall.SIGTERM)
 	go func() {
-		<-shutdown
+		s := <-shutdown
+		fmt.Printf("%s signal received, server is shutting down...\n", s.String())
 		cancel()
 	}()
 
