@@ -85,21 +85,11 @@ func (w *Wallet) Mutate(transactions ...Transaction) {
 	for _, transaction := range transactions {
 		switch transaction.Type {
 		case DepositTransactionType:
-			w.Balance = add(w.Balance, transaction.Money)
+			transaction.Money.Add(&w.Balance)
 		case WithdrawTransactionType:
-			w.Balance = sub(w.Balance, transaction.Money)
+			transaction.Money.Sub(&w.Balance)
 		}
 	}
-}
-
-func add(to Money, add Money) Money {
-	to.Amount += add.Amount
-	return to
-}
-
-func sub(from Money, sub Money) Money {
-	from.Amount -= sub.Amount
-	return from
 }
 
 func (w *Wallet) apply(transaction Transaction) {

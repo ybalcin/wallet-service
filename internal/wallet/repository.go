@@ -7,6 +7,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+//go:generate mockgen -source=repository.go -destination=./test/repository_mock.go -package=wallet
+
 const (
 	walletsCollection      = "wallets"
 	transactionsCollection = "transactions"
