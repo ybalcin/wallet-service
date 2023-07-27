@@ -28,6 +28,6 @@ func (r *ApiRoot) RegisterRoutes(walletApi *wallet.Api) {
 	walletApi.AddRoutesTo(group)
 }
 
-func (r *ApiRoot) Listen() error {
-	return r.app.Listen(":8080")
+func (r *ApiRoot) Listen(port string) error {
+	return r.app.Listen(":" + port)
 }

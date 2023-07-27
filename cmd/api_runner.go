@@ -35,7 +35,7 @@ func RunApi(ctx context.Context) error {
 	root := NewApiRoot(walletApi)
 
 	go func() {
-		if err = root.Listen(); err != nil {
+		if err = root.Listen(cfg.Port); err != nil {
 			log.Fatalf("server listen error: %v\n", err)
 		}
 	}()

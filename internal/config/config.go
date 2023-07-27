@@ -9,6 +9,7 @@ import (
 type (
 	Config struct {
 		MongoSettings MongoSettings `yaml:"MongoSettings"`
+		Port          string
 	}
 
 	MongoSettings struct {
@@ -20,7 +21,11 @@ type (
 func Read() (*Config, error) {
 	mongoURI := os.Getenv("MONGO_URI")
 	databaseName := os.Getenv("DATABASE_NAME")
+	port := os.Getenv("PORT")
 
+	if utility.IsStrEmpty(port) {
+		return nil, errors.New("provide valid PORT via env")
+	}
 	if utility.IsStrEmpty(mongoURI) {
 		return nil, errors.New("provide valid MONGO_URI via env")
 	}
@@ -31,5 +36,5 @@ func Read() (*Config, error) {
 	return &Config{MongoSettings: MongoSettings{
 		URI:      mongoURI,
 		Database: databaseName,
-	}}, nil
+	}, Port: port}, nil
 }
