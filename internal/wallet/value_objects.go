@@ -8,7 +8,7 @@ type Money struct {
 
 func NewMoney(amount float32) (*Money, error) {
 	if amount < 0 {
-		return nil, errors.New("invalid money amount")
+		return nil, errors.New(ErrInvalidMoneyAmount)
 	}
 
 	return &Money{Amount: amount}, nil

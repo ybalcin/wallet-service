@@ -77,7 +77,7 @@ func (r *MongoRepository) FindWalletByID(ctx context.Context, id string) (*Walle
 	}
 
 	wallet := new(Wallet)
-	if err := res.Decode(wallet); err != nil {
+	if err := res.Decode(&wallet); err != nil {
 		return nil, err
 	}
 
